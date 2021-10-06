@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "discord-voice": "^2.0.4",
+    "discord.js": "^12.5.3"
+  }
+}
