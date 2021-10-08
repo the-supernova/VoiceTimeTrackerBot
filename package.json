@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "discord-voice": "^2.0.6",
+    "discord.js": "^12.5.3",
+    "embed-paginator": "^1.0.2"
+  }
+}
