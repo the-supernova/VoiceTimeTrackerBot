@@ -36,7 +36,7 @@ client.on("message", (message) => {
     if (command === "help"){
         const embed = new MessageEmbed()
             .setTitle("Help")
-            .setDescription("Here is the list of available commands! Use `!v` before them")
+            .setDescription("Here is the list of available commands! Use `v!` before them")
             .setThumbnail("https://i.imgur.com/4KVqtpu.png")
             .addFields(
                 { name: "create-user", value: "Creates a new user"},
@@ -55,7 +55,7 @@ client.on("message", (message) => {
     if (command === "edit-user-help"){
         const embed = new MessageEmbed()
             .setTitle("Edit User Help")
-            .setDescription("Here is the list of available commands! Use `!v edit-user-help` before them")
+            .setDescription("Here is the list of available commands! Use `v! edit-user` before them")
             .setThumbnail("https://i.imgur.com/4KVqtpu.png")
             .addFields(
                 { name: "xp", value: "Edits a user's xp `Args: Number`"},
@@ -69,7 +69,7 @@ client.on("message", (message) => {
     if (command === "edit-config-help"){
         const embed = new MessageEmbed()
             .setTitle("Edit Config Help")
-            .setDescription("Here is the list of available commands! Use `!v edit-config-help` before them")
+            .setDescription("Here is the list of available commands! Use `v! edit-config` before them")
             .setThumbnail("https://i.imgur.com/4KVqtpu.png")
             .addFields(
                 { name: "track-bots", value: "Edits whether bots are able to be tracked `Args: Boolean`"},
@@ -320,7 +320,7 @@ client.on("message", (message) => {
             case "all":
                 const embeds1 = [];
                 client.voiceManager.users.forEach((user) => {
-                    embeds1.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                    embeds1.push({'name':`${user.userId}`,'value':`User: <@${user.userId}>\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
                 });
                 const embed1 = new PaginatedEmbed({
                     colours: ['RANDOM'],
@@ -339,7 +339,7 @@ client.on("message", (message) => {
             case "guild":
                 const embeds2 = [];
                 client.voiceManager.users.filter((u) => u.guildId === `${args[1]}`).forEach((user) => {
-                    embeds2.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                    embeds2.push({'name':`${user.userId}`,'value':`User: <@${user.userId}>\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
                 });
                 const embed2 = new PaginatedEmbed({
                     colours: ['RANDOM'],
@@ -358,7 +358,7 @@ client.on("message", (message) => {
             case "user":
                 const embeds3 = [];
                 client.voiceManager.users.filter((u) => u.user.id === `${args[1]}`).forEach((user) => {
-                    embeds3.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                    embeds3.push({'name':`${user.userId}`,'value':`User: <@${user.userId}>\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
                 });
                 const embed3 = new PaginatedEmbed({
                     colours: ['RANDOM'],
