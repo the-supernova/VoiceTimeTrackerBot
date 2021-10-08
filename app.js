@@ -1,5 +1,6 @@
 const { prefix, token } = require('./config.json');
 const { MessageEmbed } = require('discord.js');
+const { PaginatedEmbed } = require('embed-paginator');
 const { Client, Intents } = require("discord.js"),
     client = new Client({
         intents: [Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] // The GUILD_VOICE_STATES and GUILDS intents are required for discord-voice to function.
@@ -113,10 +114,10 @@ client.on("message", (message) => {
         client.voiceManager.createConfig(message.guild.id, {
             trackBots: false, // If the user is a bot it will not be tracked.
             trackAllChannels: true, // All of the channels in the guild will be tracked.
-            exemptChannels: () => false, // The user will not be tracked in these channels. (This is a function).
+            exemptChannels: new Function('return false;'), // The user will not be tracked in these channels. (This is a function).
             channelIds: [], // The channel ids to track. (If trackAllChannels is true, this is ignored)
             exemptPermissions: [], // The user permissions to not track.
-            exemptMembers: () => false, // The user will not be tracked. (This is a function).
+            exemptMembers: new Function('return false;'), // The user will not be tracked. (This is a function).
             trackMute: true, // It will track users if they are muted aswell.
             trackDeaf: true, // It will track users if they are deafen aswell.
             minUserCountToParticipate: 0, // The min amount of users to be in a channel to be tracked.
@@ -125,8 +126,8 @@ client.on("message", (message) => {
             minLevelToParticipate: 0, // The min level needed to be tracked.
             maxXpToParticipate: 0, // The max amount of xp needed to be tracked.
             maxLevelToParticipate: 0, // The max level needed to be tracked.
-            xpAmountToAdd: () => Math.floor(Math.random() * 10) + 1, // The amount of xp to add to the user (This is a function).
-            voiceTimeToAdd: () => 1000, // The amount of time in ms to add to the user (This is a function).
+            xpAmountToAdd: new Function(`return ${Math.floor(Math.random() * 10) + 1};`), // The amount of xp to add to the user (This is a function).
+            voiceTimeToAdd: new Function('return 1000;'), // The amount of time in ms to add to the user (This is a function).
             voiceTimeTrackingEnabled: true, // Whether the voiceTimeTracking module is enabled.
             levelingTrackingEnabled: true // Whether the levelingTracking module is enabled.
         });
@@ -317,13 +318,61 @@ client.on("message", (message) => {
     if (command === "fetch-user"){
         switch(args[0]){
             case "all":
-                message.channel.send(client.voiceManager.users);
+                const embeds1 = [];
+                client.voiceManager.users.forEach((user) => {
+                    embeds1.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                });
+                const embed1 = new PaginatedEmbed({
+                    colours: ['RANDOM'],
+                    descriptions: [],
+                    fields: embeds1,
+                    duration: 60 * 1000, // in milliseconds
+                    itemsPerPage: 2,
+                    paginationType: 'field'
+                })
+                    .setThumbnail("https://i.imgur.com/4KVqtpu.png")
+                    .setTimestamp()
+                    .setTitle('Users');
+            
+                embed1.send(message.channel);
                 break;
             case "guild":
-                message.channel.send(client.voiceManager.users.filter((u) => u.guildId === `${args[1]}`));
+                const embeds2 = [];
+                client.voiceManager.users.filter((u) => u.guildId === `${args[1]}`).forEach((user) => {
+                    embeds2.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                });
+                const embed2 = new PaginatedEmbed({
+                    colours: ['RANDOM'],
+                    descriptions: [],
+                    fields: embeds2,
+                    duration: 60 * 1000, // in milliseconds
+                    itemsPerPage: 2,
+                    paginationType: 'field'
+                })
+                    .setThumbnail("https://i.imgur.com/4KVqtpu.png")
+                    .setTimestamp()
+                    .setTitle('Users');
+            
+                embed2.send(message.channel);
                 break;
             case "user":
-                message.channel.send(client.voiceManager.users.filter((u) => u.userId === `${args[1]}`));
+                const embeds3 = [];
+                client.voiceManager.users.filter((u) => u.user.id === `${args[1]}`).forEach((user) => {
+                    embeds3.push({'name':`<@${user.userId}>`,'value':`User ID: ${user.userId}\nXP: ${user.levelingData.xp}\nLevel: ${user.levelingData.level}`})
+                });
+                const embed3 = new PaginatedEmbed({
+                    colours: ['RANDOM'],
+                    descriptions: [],
+                    fields: embeds3,
+                    duration: 60 * 1000, // in milliseconds
+                    itemsPerPage: 2,
+                    paginationType: 'field'
+                })
+                    .setThumbnail("https://i.imgur.com/4KVqtpu.png")
+                    .setTimestamp()
+                    .setTitle('Users');
+            
+                embed3.send(message.channel);
                 break;
             default:
                 message.channel.send("Invalid argument.");
@@ -333,10 +382,42 @@ client.on("message", (message) => {
     if (command === "fetch-config"){
         switch(args[0]){
             case "all":
-                message.channel.send(client.voiceManager.configs);
+                const embeds4 = [];
+                client.voiceManager.configs.forEach((config) => {
+                    embeds4.push({'name':`${message.guild.name}`, 'value':`Min user count to participate: ${config.options.minUserCountToParticipate}\nMax user count to participate: ${config.options.maxUserCountToParticipate}\nMin xp to participate: ${config.options.minXpToParticipate}\nMin level to participate: ${config.options.minLevelToParticipate}\nMax xp to participate: ${config.options.maxXpToParticipate}\nMax level to participate: ${config.options.maxLevelToParticipate}\nVoice time tracking enabled: ${config.options.voiceTimeTrackingEnabled}\nLeveling tracking enabled: ${config.options.levelingTrackingEnabled}`});
+                });
+                const embed4 = new PaginatedEmbed({
+                    colours: ['RANDOM'],
+                    descriptions: [],
+                    fields: embeds4,
+                    duration: 60 * 1000, // in milliseconds
+                    itemsPerPage: 2,
+                    paginationType: 'field'
+                })
+                    .setThumbnail("https://i.imgur.com/4KVqtpu.png")
+                    .setTimestamp()
+                    .setTitle('Configs');
+            
+                embed4.send(message.channel);
                 break;
             case "guild":
-                message.channel.send(client.voiceManager.configs.filter((c) => c.guildId === `${args[1]}`));
+                const embeds5 = [];
+                client.voiceManager.configs.filter((c) => c.guildId === `${args[1]}`).forEach((config) => {
+                    embeds5.push({'name':`${message.guild.name}`, 'value':`Min user count to participate: ${config.options.minUserCountToParticipate}\nMax user count to participate: ${config.options.maxUserCountToParticipate}\nMin xp to participate: ${config.options.minXpToParticipate}\nMin level to participate: ${config.options.minLevelToParticipate}\nMax xp to participate: ${config.options.maxXpToParticipate}\nMax level to participate: ${config.options.maxLevelToParticipate}\nVoice time tracking enabled: ${config.options.voiceTimeTrackingEnabled}\nLeveling tracking enabled: ${config.options.levelingTrackingEnabled}`});
+                });
+                const embed5 = new PaginatedEmbed({
+                    colours: ['RANDOM'],
+                    descriptions: [],
+                    fields: embeds5,
+                    duration: 60 * 1000, // in milliseconds
+                    itemsPerPage: 2,
+                    paginationType: 'field'
+                })
+                    .setThumbnail("https://i.imgur.com/4KVqtpu.png")
+                    .setTimestamp()
+                    .setTitle('Configs');
+            
+                embed5.send(message.channel);
                 break;
             default:
                 message.channel.send("Invalid argument.");
