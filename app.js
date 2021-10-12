@@ -327,12 +327,12 @@ client.on("message", (message) => {
                     descriptions: [],
                     fields: embeds1,
                     duration: 60 * 1000, // in milliseconds
-                    itemsPerPage: 2,
+                    itemsPerPage: 3,
                     paginationType: 'field'
                 })
                     .setThumbnail("https://i.imgur.com/4KVqtpu.png")
                     .setTimestamp()
-                    .setTitle('Users');
+                    .setTitle('Users Data');
             
                 embed1.send(message.channel);
                 break;
@@ -346,12 +346,12 @@ client.on("message", (message) => {
                     descriptions: [],
                     fields: embeds2,
                     duration: 60 * 1000, // in milliseconds
-                    itemsPerPage: 2,
+                    itemsPerPage: 3,
                     paginationType: 'field'
                 })
                     .setThumbnail("https://i.imgur.com/4KVqtpu.png")
                     .setTimestamp()
-                    .setTitle('Users');
+                    .setTitle('Users Data');
             
                 embed2.send(message.channel);
                 break;
@@ -365,12 +365,12 @@ client.on("message", (message) => {
                     descriptions: [],
                     fields: embeds3,
                     duration: 60 * 1000, // in milliseconds
-                    itemsPerPage: 2,
+                    itemsPerPage: 3,
                     paginationType: 'field'
                 })
                     .setThumbnail("https://i.imgur.com/4KVqtpu.png")
                     .setTimestamp()
-                    .setTitle('Users');
+                    .setTitle('Users Data');
             
                 embed3.send(message.channel);
                 break;
@@ -391,12 +391,12 @@ client.on("message", (message) => {
                     descriptions: [],
                     fields: embeds4,
                     duration: 60 * 1000, // in milliseconds
-                    itemsPerPage: 2,
+                    itemsPerPage: 3,
                     paginationType: 'field'
                 })
                     .setThumbnail("https://i.imgur.com/4KVqtpu.png")
                     .setTimestamp()
-                    .setTitle('Configs');
+                    .setTitle('Configs Data');
             
                 embed4.send(message.channel);
                 break;
@@ -410,12 +410,12 @@ client.on("message", (message) => {
                     descriptions: [],
                     fields: embeds5,
                     duration: 60 * 1000, // in milliseconds
-                    itemsPerPage: 2,
+                    itemsPerPage: 3,
                     paginationType: 'field'
                 })
                     .setThumbnail("https://i.imgur.com/4KVqtpu.png")
                     .setTimestamp()
-                    .setTitle('Configs');
+                    .setTitle('Configs Data');
             
                 embed5.send(message.channel);
                 break;
